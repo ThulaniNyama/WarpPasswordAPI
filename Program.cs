@@ -57,7 +57,7 @@ namespace PasswordAPIAssessment
 			// Open stream reader and read from dict.txt file
 			StreamReader sR = new StreamReader("../../../dict.txt");
 			string scheme = "Basic", user = "john", pwd = sR.ReadLine();
-			string status = "http://recruitment.warpdevelopment.co.za/api/upload/4324scs2345fdsdf14265t354wef25432451455tfacagfwrgh/", res;
+			string status = "200", res;
 
 			try
 			{
@@ -71,7 +71,7 @@ namespace PasswordAPIAssessment
 					{
 						// Envoke UploadDocs() to upload zip file
 						Console.ReadKey();
-						UpLoadDocs(status);
+						UpLoadDocs();
 					}
 					else
 					{
@@ -179,7 +179,7 @@ namespace PasswordAPIAssessment
 			return resValue;
 		}
 
-		async static void UpLoadDocs(string resURL)
+		async static void UpLoadDocs()
 		{
 			/*
 			// Method Name : method void UpLoadDocs()
@@ -193,13 +193,14 @@ namespace PasswordAPIAssessment
 			byte[] fileBytes;
 			// Create zipped file
 			string[] paths = { @"../../../tNyama.pdf", @"../../../dict.txt", @"../../../Program.cs" };
+			
 			// Envoke Zipper() to zip the files
 			string zippedFiles = Zipper(paths);
 			// Get bytes of the zipped file
 			fileBytes = Encoding.UTF8.GetBytes(zippedFiles);
 			// Convert the bytes of the zipped file to a Base64 string
-			var encodedZip = "Data:" + Convert.ToBase64String(fileBytes);
-
+			var encodedZip = Convert.ToBase64String(fileBytes);
+			string resURL = "http://recruitment.warpdevelopment.co.za/api/upload/" + encodedZip +"/";
 			IEnumerable<KeyValuePair<string, string>> req = new List<KeyValuePair<string, string>>()
 			{
 				new KeyValuePair<string, string>("post", encodedZip)
